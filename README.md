@@ -1,2 +1,4 @@
-# dotfiles
-my dotfiles
+# yzak's dotfiles
+
+.vimrc
+
