@@ -1,4 +1,5 @@
 # yzak's dotfiles
 
-.vimrc
-
+* .vimrc
+* .taskrc
+* .i3/config
