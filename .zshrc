@@ -19,8 +19,11 @@ antigen theme bira
 # Tell antigen that you're done.
 antigen apply
 
+#Keys "home/end" in gnome-terminal
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+
 #Aliases
 alias dormir="sudo pm-hibernate"
 alias cochilar="sudo pm-suspend"
-alias telegram="/home/yzakius/Downloads/Telegram/Telegram &"
 
