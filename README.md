@@ -2,4 +2,7 @@
 
 * .vimrc
 * .taskrc
-* .i3/config
+* .zsh
+	* antigen
+* i3 [config, i3blocks, i3status]
+* Awesome
