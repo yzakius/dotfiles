@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
+local APW = require("apw/widget")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -82,7 +83,7 @@ end
 -- Define a tag table which hold all screen tags.
 tags = {
 	names = { "chat", "www", "term", 4, 5, 6, 7, 8, 9 },
-	layout = { layouts[1], layouts[2], layouts[1], layouts[5], layouts[6], layouts[12], layouts[9], layouts[3], layouts[7]}
+	layout = { layouts[1], layouts[2], layouts[2], layouts[5], layouts[6], layouts[12], layouts[9], layouts[3], layouts[7]}
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -119,27 +120,20 @@ mytextclock = awful.widget.textclock()
 -- Initialize widget, use widget({ type = "textbox" }) for awesome < 3.5
 cpuwidget = wibox.widget.textbox()
 -- Register widget
-vicious.register(cpuwidget, vicious.widgets.cpu, "CPU: $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, " CPU: $1%")
 -- Create a wibox for each screen and add it
-
--- {{ Volume Widget}} --
-volume = wibox.widget.textbox()
-vicious.register(volume, vicious.widgets.volume, '<span font="Liberation 10" color="#AAAAAA" background="#1F2428"> Vol:$1 </span>', 1, "Master")
-
-volumeicon = wibox.widget.imagebox()
-vicious.register(volumeicon, vicious.widgets.volume, function(widget, args)
-    local paraone = tonumber(args[1])
-
-    if args[2] == "♩" or paraone == 0 then
-        volumeicon:set_image(beautiful.mute)
-    elseif paraone >= 67 and paraone <= 100 then
-        volumeicon:set_image(beautiful.music)
-    elseif paraone >= 33 and paraone <= 66 then
-        volumeicon:set_image(beautiful.music)
-    else
-        volumeicon:set_image(beautiful.music)
-    end
-end, 1, "Master")
+-- {Bateria}
+batterywidget = wibox.widget.textbox()
+batterywidget:set_text(" | Battery | ")
+batterywidgettimer = timer({ timeout = 5 })
+batterywidgettimer:connect_signal("timeout",
+  function()
+    fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
+    batterywidget:set_text(" |" .. fh:read("*l") .. " | ")
+    fh:close()
+  end
+)
+batterywidgettimer:start()
 
 mywibox = {}
 mypromptbox = {}
@@ -220,8 +214,8 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
 	right_layout:add(cpuwidget)
-    right_layout:add(volumeicon)
-	right_layout:add(volume)
+	right_layout:add(APW)
+	right_layout:add(batterywidget)
 	right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -278,7 +272,7 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Shift"   }, "e", awesome.quit),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -293,12 +287,18 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-	-- My Keys
+	-- {{My Keys}}
+	-- Lock
 	awful.key({ "Control", "Shift"}, "l", function() awful.util.spawn("slock") end),
--- {{ Volume Control }} --
-    awful.key({ }, "XF86AudioRaiseVolume", function() awful.util.spawn("pactl set-sink-volume 1 +5%", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function() awful.util.spawn("pactl set-sink-volume 1 -5%", false) end),
-	awful.key({ }, "XF86AudioMute", function() awful.util.spawn("pactl set-sink-mute 1 toggle", false) end),
+	-- Volume
+	awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
+	awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
+	awful.key({ }, "XF86AudioMute",         APW.ToggleMute),
+	-- Brightness
+	awful.key({ }, "XF86MonBrightnessDown", function ()
+    	awful.util.spawn("xbacklight -dec 15") end),
+	awful.key({ }, "XF86MonBrightnessUp", function ()
+		awful.util.spawn("xbacklight -inc 15") end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -480,3 +480,7 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+-- {{ Startup Aplications }}
+awful.util.spawn_with_shell("nm-applet")
+awful.util.spawn_with_shell("owncloud")
+awful.util.spawn_with_shell("run_once redshift-gtk")
