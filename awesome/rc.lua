@@ -39,7 +39,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/themes/zenburn/theme.lua")
+beautiful.init("~/.config/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -286,8 +286,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    -- awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 	-- {{My Keys}}
+	-- Rofi
+	awful.key({ modkey}, "r", function() awful.util.spawn("rofi -show run") end),
 	-- Lock
 	awful.key({ "Control", "Shift"}, "l", function() awful.util.spawn("slock") end),
 	-- Volume
