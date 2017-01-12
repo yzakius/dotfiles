@@ -123,11 +123,11 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 #Programs in workspaces
 # don't working
-assign [class="^Pidgin$"] 1
+assign [class="^Gajim$"] 1
 assign [title="^weechat"] 1
 assign [class="^Firefox$"] 2
 assign [class="^Icedove$"] 6
-for_window [class="Pidgin"] floating enable
+for_window [class="Gajim"] floating enable
 for_window [title="^weechat$"] floating enable
 
 # reload the configuration file
@@ -185,11 +185,11 @@ bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle
 #bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
 #bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
 #bindsym XF86AudioMute exec amixer -q set Master toggle
-# Clementine control
-bindsym XF86AudioPlay exec clementine --play-pause
-bindsym XF86AudioStop exec clementine --stop
-bindsym XF86AudioPrev exec clementine --previous
-bindsym XF86AudioNext exec clementine --next
+# Sound control (use exec $player)
+bindsym XF86AudioPlay exec lollypop --play-pause
+bindsym XF86AudioStop exec lollypop --stop
+bindsym XF86AudioPrev exec lollypop --previous
+bindsym XF86AudioNext exec lollypop --next
 # Screenshot (/tmp como diretório padrão)
 bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 # Time tracker
