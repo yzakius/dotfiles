@@ -40,22 +40,29 @@ case $TERM in
 	;; 
 esac
 
+#Cow + Fortune
+echo
+  cowfortune
+echo
 
 # Layout do prompt
 PROMPT="╭─$ %n@%m% / %~ 
 ╰─%B$ %b "
 RPS1="%B${return_code}%b"
 
-# Habilita os botões Home e End
+# Habilita os botões Home, end, delete
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
+bindkey "\e[3~" delete-char
 
 # PATH Ruby
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 ### ALIASES
-alias dormir="sudo systemctl hibernate"
-alias notas="cd ~/ownCloud/notes/"
+alias dormir="echo 'Boa noite! ;*' && sudo systemctl hibernate"
+alias cochilar="echo 'Não demora! =) ' && sudo systemctl suspend"
+alias notas="cd ~/Nextcloud/notes/"
+alias clima='curl -4 http://wttr.in/Recife' #by diogo leal
 #Pomodoro Technique
 alias work="sleep 25m && mpg123 ~/Música/metallica\ \[us\ 1984\]\ ride\ the\ lightning/04\ Fade\ To\ Black.mp3"
 alias srest="sleep 5m && mpg123 ~/Música/metallica\ \[us\ 1984\]\ ride\ the\ lightning/04\ Fade\ To\ Black.mp3"
