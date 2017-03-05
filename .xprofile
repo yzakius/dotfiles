@@ -1,1 +1,2 @@
-slstatus -d &
+slstatus -d & #for dwm
+compton -b

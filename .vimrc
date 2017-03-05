@@ -12,7 +12,7 @@ call plug#end()
 syntax on
 set number
 set mouse=a
-color desert
+color industry
 set cursorline 
 highlight  CursorLine cterm=bold ctermbg=darkgray ctermfg=white
 " Statusline
@@ -30,7 +30,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 " vim-airline
-let g:airline_theme = 'dark'
+let g:airline_theme = 'base16'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -76,3 +76,7 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
+
+"Maps
+
+map <F2> :NERDTreeToggle<CR>
