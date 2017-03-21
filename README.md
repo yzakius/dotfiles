@@ -1,8 +1,11 @@
 # yzak's dotfiles
 
-* .vimrc
-* .taskrc
-* .zsh
-	* antigen
+* awesome wm
+* conky
+* etc
 * i3 [config, i3blocks, i3status]
-* Awesome
+* termite
+* vim / neovim
+* xresources
+* xprofile
+* zsh
