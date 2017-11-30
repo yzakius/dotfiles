@@ -1,5 +1,4 @@
 " needs better comments... I know :~
-"
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-ruby/vim-ruby'
@@ -32,7 +31,6 @@ noremap <silent> <F3> :NERDTreeFind<CR>
 noremap <F2> :NERDTreeToggle<CR>
 "map <F2> :NERDTreeToggle<CR>
 "map <CTRL+\> :NERDTreeToggle<CR>
-"
 
 "----- Test Area ------
 setlocal wrap
@@ -53,6 +51,10 @@ set spellfile=~/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd FileType md setlocal spell
 autocmd FileType md setlocal spelllang=en,pt_br
+
+
+"-----Clipboard
+set clipboard=unnamedplus
 
 " ----- Autocompletes ------
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
