@@ -1,84 +1,62 @@
-
+" needs better comments... I know :~
+"
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
+Plug 'vim-ruby/vim-ruby'
+Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Raimondi/delimitMate'
+Plug 'mateusbraga/vim-spell-pt-br'
 Plug 'mrtazz/simplenote.vim'
+
 call plug#end()
 
-
 syntax on
+filetype indent on
 set number
 set mouse=a
-color industry
-set cursorline 
-highlight  CursorLine cterm=bold ctermbg=darkgray ctermfg=white
-" Statusline
-set laststatus=2
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-" hilight nas pesquisas
-set hlsearch
+"----- Colors and Themes -----
+color dracula
+"set cursorline
+"highlight  CursorLine cterm=none ctermbg=darkgray ctermfg=white 
+"colorscheme desert
 
-" Clipboard
+"----- Clipboard -------
 set clipboard=unnamedplus
 
+"----- Mapping ------
+noremap <silent> <F3> :NERDTreeFind<CR>
+noremap <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
+"map <CTRL+\> :NERDTreeToggle<CR>
+"
+
+"----- Test Area ------
+setlocal wrap
+setlocal linebreak
+set noswapfile
 set tabstop=4
+iab bcd ```
+iab cd. <code></code>
 
-" NERDTree open directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" ----- Ruby ------
+"set autoindent
+"set tabstop=2
+"set shiftwidth=2
+"set expandtab
 
-" vim-airline
-let g:airline_theme = 'base16'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
+" ----- Spell ------
+set spellfile=~/.vim/spell/en.utf-8.add
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd FileType md setlocal spell
+autocmd FileType md setlocal spelllang=en,pt_br
 
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
+" ----- Autocompletes ------
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
-" vim-airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+"----- Airline like powerline ------
+let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
 
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
-endif
-
-"Maps
-
-map <F2> :NERDTreeToggle<CR>
