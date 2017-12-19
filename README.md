@@ -6,7 +6,6 @@
 3. Open the vim
   - PlugInstall
 
-## awesome wm
 ## conky
 ## etc
 ## i3 [config, i3blocks, i3status]
