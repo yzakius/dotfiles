@@ -1,28 +1,38 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'felipesousa/rupza'
+Plug 'ErichDonGubler/vim-sublime-monokai'
 Plug 'mateusbraga/vim-spell-pt-br'
+Plug 'Raimondi/delimitMate'
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+
 
 call plug#end()
+
+"----vim tips
+"autocmd VimEnter * call Tip()
 
 syntax on
 filetype indent on
 set number
 set mouse=a
+" Retirar os paranteses
+let g:loaded_matchparen=1
+"hi MatchParen cterm=none ctermbg=none ctermfg=magenta
+"hi MatchParen cterm=none ctermbg=green ctermfg=blue
 
 "-----Colors
-color dracula
+"set background=dark
+colorscheme monokai
+"colorscheme rupza
+set termguicolors
 "set cursorline
 "highlight  CursorLine cterm=none ctermbg=darkgray ctermfg=white 
-"colorscheme seagrey-dark
-"let g:seagrey_dark_CursorLineNr = 'on'
-"let g:seagrey_light_CursorLineNr = 'off'
-"let g:seagrey_dark_LineNr = 'off'
-"let g:seagrey_light_LineNr = 'off'
 
 "-----Clipboard
 set clipboard=unnamedplus
@@ -30,9 +40,10 @@ set clipboard=unnamedplus
 "-----Maps
 noremap <silent> <F3> :NERDTreeFind<CR>
 noremap <F2> :NERDTreeToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 "map <F2> :NERDTreeToggle<CR>
 "map <CTRL+\> :NERDTreeToggle<CR>
-"
+
 "testes
 setlocal wrap
 setlocal linebreak
