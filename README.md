@@ -1,3 +1,7 @@
 # My dotfiles
 
-Some files to conf my environment.
+Some files to setup my environment.
+
+## vim
+
+* `cp vim.conf ~/.vimrc`
